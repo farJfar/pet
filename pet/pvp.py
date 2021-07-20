@@ -353,6 +353,38 @@ class MnliPVP(PVP):
             return MnliPVP.VERBALIZER_A[label]
         return MnliPVP.VERBALIZER_B[label]
 
+class PKBSubjectPVP(PVP):
+    VERBALIZER = {
+        "1": ["I"],
+        "2": ["you"],
+        "3": ["we"],
+        "4": ["she"],
+        "5": ["he"],
+        "6": ["they"]
+    }
+
+    def get_parts(self, example: InputExample):
+        text_a = self.shortenable(example.text_a)
+        text_b = self.shortenable(example.text_b)
+
+        if self.pattern_id == 0:
+            # this corresponds to the pattern a. [MASK] enjoy b.
+            return [text_a, '.', self.mask, 'enjoy', text_b ,'.'], []
+        elif self.pattern_id == 1:
+            # this corresponds to the pattern a. [MASK] enjoys b.
+            return [text_a, '.', self.mask, 'enjoys', text_b ,'.'], []
+        elif self.pattern_id == 2:
+            # this corresponds to the pattern a. [MASK] like b.
+            return [text_a, '.', self.mask, 'like', text_b ,'.'], []
+        elif self.pattern_id == 3:
+            # this corresponds to the pattern a. [MASK] likes b.
+            return [text_a, '.', self.mask, 'likes', text_b ,'.'], []
+        else:
+            raise ValueError("No pattern implemented for id {}".format(self.pattern_id))
+
+    def verbalize(self, label) -> List[str]:
+        return PKBSubjectPVP.VERBALIZER[label]
+
 
 class YelpPolarityPVP(PVP):
     VERBALIZER = {
@@ -637,4 +669,5 @@ PVPS = {
     'record': RecordPVP,
     'ax-b': RtePVP,
     'ax-g': RtePVP,
+    'pkbsubject': PKBSubjectPVP,
 }
