@@ -369,16 +369,16 @@ class PKBSubjectPVP(PVP):
 
         if self.pattern_id == 0:
             # this corresponds to the pattern a. [MASK] enjoy b.
-            return [text_a, '.', self.mask, 'enjoy', text_b ,'.'], []
+            return [text_a, self.mask, 'enjoy', text_b ,'.'], []
         elif self.pattern_id == 1:
             # this corresponds to the pattern a. [MASK] enjoys b.
-            return [text_a, '.', self.mask, 'enjoys', text_b ,'.'], []
+            return [text_a, self.mask, 'enjoys', text_b ,'.'], []
         elif self.pattern_id == 2:
             # this corresponds to the pattern a. [MASK] like b.
-            return [text_a, '.', self.mask, 'like', text_b ,'.'], []
+            return [text_a, self.mask, 'like', text_b ,'.'], []
         elif self.pattern_id == 3:
             # this corresponds to the pattern a. [MASK] likes b.
-            return [text_a, '.', self.mask, 'likes', text_b ,'.'], []
+            return [text_a, self.mask, 'likes', text_b ,'.'], []
         else:
             raise ValueError("No pattern implemented for id {}".format(self.pattern_id))
 
